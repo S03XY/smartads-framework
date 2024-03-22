@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
-import { Rubik_Vinyl } from "next/font/google";
+import { Nosifer } from "next/font/google";
 import { Josefin_Sans } from "next/font/google";
 import "./globals.css";
 
-const rubik_vinyl = Rubik_Vinyl({
+const nosifer = Nosifer({
   weight: ["400"],
   subsets: ["latin"],
-  variable: "--font-rubik-vinyl",
+  variable: "--font-nosifer",
 });
 
 const josefin_sans = Josefin_Sans({
@@ -20,6 +20,7 @@ export const metadata: Metadata = {
   title: "frames.js starter",
   description: "...",
 };
+import { AppDynamicContextProvider } from "../modules/providers/dynamicProvider";
 
 export default function RootLayout({
   children,
@@ -28,9 +29,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${josefin_sans.variable} ${rubik_vinyl.variable} font-josefin-sans`}>
-        {children} 
-      </body>
+      <AppDynamicContextProvider>
+        <body
+          className={`${josefin_sans.variable} ${nosifer.variable} font-josefin-sans`}
+        >
+          {children}
+        </body>
+      </AppDynamicContextProvider>
     </html>
   );
 }

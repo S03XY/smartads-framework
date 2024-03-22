@@ -85,7 +85,7 @@ const config = {
 
       fontFamily: {
         "josefin-sans": ["var(--font-josefin-sans)"],
-        "rubik-vinyl": ["var(--font-rubik-vinyl)"],
+        "nosifer": ["var(--font-nosifer)"],
       },
     },
   },

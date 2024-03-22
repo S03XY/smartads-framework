@@ -13,19 +13,27 @@
     "update-framesjs": "yarn upgrade frames.js@latest && yarn run update-debugger"
   },
   "dependencies": {
+    "@dynamic-labs/ethereum": "^1.4.0",
+    "@dynamic-labs/ethers-v5": "^1.4.0",
+    "@dynamic-labs/sdk-react-core": "^1.4.0",
+    "@dynamic-labs/wagmi-connector": "^1.4.0",
     "@farcaster/core": "^0.14.3",
     "@noble/ed25519": "^2.0.0",
     "@vercel/kv": "^1.0.1",
     "@xmtp/frames-validator": "^0.5.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
+    "ethers": "5",
     "frames.js": "^0.8.4",
     "lucide-react": "^0.331.0",
     "next": "14.1.0",
+    "pino-pretty": "^11.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^5.0.1",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "viem": "1",
+    "wagmi": "1"
   },
   "engines": {
     "node": ">=18.17.0"

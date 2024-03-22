@@ -1,5 +1,7 @@
+import { redirect } from "next/navigation";
+
 const LandingPage = () => {
-  return <div className="">Smart add login</div>;
+  redirect("/smartads/reward");
 };
 
 export default LandingPage;
