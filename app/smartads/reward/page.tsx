@@ -3,6 +3,7 @@ import { DynamicWidget, useDynamicContext } from "@dynamic-labs/sdk-react-core";
 import { MdOutlineWavingHand } from "react-icons/md";
 
 import "./reward.css";
+import { useEffect, useState } from "react";
 
 const RewardHomePage = () => {
   const { showAuthFlow, primaryWallet } = useDynamicContext();
@@ -18,6 +19,33 @@ export default RewardHomePage;
 
 export const LoggedInInterface = () => {
   const { user, primaryWallet } = useDynamicContext();
+
+  const [userData, setUserData] = useState<any>([]);
+
+  useEffect(() => {
+    async function getUserData() {
+      const response = await fetch(
+        `/api/update-user?wallet_address=${primaryWallet?.address}&email=${user?.email}`
+      );
+
+      const data = await response.json();
+      setUserData(data.response);
+    }
+    getUserData();
+  }, [primaryWallet, user]);
+
+  const claim = async () => {
+    const response = await fetch(`/api/airdrop`, {
+      method: "POST",
+      body: JSON.stringify({
+        email: user?.email,
+        walletAddress: primaryWallet?.address,
+      }),
+    });
+
+    const data = await response.json();
+    console.log("claim tx", data);
+  };
 
   return (
     <div className="px-10">
@@ -37,7 +65,7 @@ export const LoggedInInterface = () => {
           <div className="mt-5 space-y-4 max-w-fit">
             <div className="flex justify-between items-center space-x-10">
               <p>SmartAds Points Accumulated</p>
-              <p>10</p>
+              <p>{userData.length * 10}</p>
             </div>
             <div className="flex justify-between items-center space-x-10">
               <p>SmartAds Points Claimed</p>
@@ -46,16 +74,25 @@ export const LoggedInInterface = () => {
             <div className="flex justify-between items-center space-x-10">
               <p>SmartAds Points Balance</p>
               <p>
-                5 <span className="text-sm text-gray-500">= $20.09</span>
+                {userData.length * 10}{" "}
+                <span className="text-sm text-gray-500">
+                  = {`$ ${userData.length * 10 * 0.05} `}
+                </span>
               </p>
             </div>
           </div>
         </div>
         <div className="h-full w-full flex justify-center items-center flex-col">
           <p className="text-[64px]">
-            Balance: 5<span className="text-sm text-gray-500">= $20.09</span>
+            Balance: {userData.length * 10}
+            <span className="text-sm text-gray-500">
+              = {`$ ${userData.length * 10 * 0.05} `}
+            </span>
           </p>
-          <button className="border p-2 px-8 w-full max-w-fit rounded-lg text-gray-500">
+          <button
+            className="border p-2 px-8 w-full max-w-fit rounded-lg text-gray-500"
+            onClick={claim}
+          >
             Claim
           </button>
         </div>
@@ -68,27 +105,19 @@ export const LoggedInInterface = () => {
               <td></td>
               <td>TxHash</td>
               <td>Points</td>
-              <td>Ad</td>
             </tr>
           </thead>
 
           <tbody className="">
-            <tr className="text-gray-500">
-              <td>1</td>
-              <td>
-                0x0f6e0d6c56d31ba1abdeeb349b979323dd18d24cbaee8eca15c9061099f114ba
-              </td>
-              <td>10</td>
-              <td>b349b979323dd18d24cbae</td>
-            </tr>
-            <tr className="text-gray-500">
-              <td className="">2</td>
-              <td>
-                0x0f6e0d6c56d31ba1abdeeb349b979323dd18d24cbaee8eca15c9061099f114ba
-              </td>
-              <td>5</td>
-              <td>b349b979323dd18d24cbae</td>
-            </tr>
+            {userData.map((d: any, i: number) => {
+              return (
+                <tr className="text-gray-500" key={i}>
+                  <td className="">{i + 1}</td>
+                  <td>{d.hash}</td>
+                  <td>{d.points}</td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>

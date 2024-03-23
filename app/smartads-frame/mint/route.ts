@@ -8,16 +8,14 @@ import { RandomNumberRequestStateValue } from "../../examples/slow-request/slow-
 import { POST as POSTNext, PreviousFrame } from "frames.js/next/server";
 
 export const POST = async (req: NextRequest, res: any) => {
-  console.log("show");
-
   const redirectHandler = (prevFrame: PreviousFrame) => {
     return "https://www.google.com";
   };
 
-  return Response.json(
-    {
-      Location: "https://www.google.com",
+  return Response.json(null, {
+    status: 302,
+    headers: {
+      Location: "http://localhost:3000/smartads/reward",
     },
-    { status: 302 }
-  );
+  });
 };

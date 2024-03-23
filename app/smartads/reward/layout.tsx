@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { SideNavigation } from "../../components/SideNavigation";
+import { SideNavigation } from "../../../components/SideNavigation";
 
 export const metadata: Metadata = {
   // without a title, warpcast won't validate your frame
