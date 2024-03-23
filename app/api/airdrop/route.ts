@@ -20,19 +20,19 @@ export const POST = async (req: NextRequest) => {
 
   const response = await db?.collection("user_data").find(query).toArray();
 
-  //   //   send the ether from admin wallet to user wallet
+  //   send the ether from admin wallet to user wallet
 
-  //   const provider = new ethers.providers.JsonRpcProvider(
-  //     "https://base-sepolia.g.alchemy.com/v2/sjw-yse2kw2qzbAR3jh2IsdHRnwsi6Zg",
-  //     "base"
-  //   );
+  const provider = new ethers.providers.JsonRpcProvider(
+    "https://base-sepolia.g.alchemy.com/v2/sjw-yse2kw2qzbAR3jh2IsdHRnwsi6Zg",
+    "base"
+  );
 
-  //   const signer = new ethers.Wallet(process.env.PRIVATE_KEY!, provider);
+  const signer = new ethers.Wallet(process.env.PRIVATE_KEY!, provider);
 
-  //   const value = ethers.utils.parseUnits(
-  //     `${response?.length! * 10 * 0.05 * 0.00001}`,
-  //     "ether"
-  //   );
+  const value = ethers.utils.parseUnits(
+    `${response?.length! * 10 * 0.05 * 0.00001}`,
+    "ether"
+  );
 
   await new Promise((resolve, reject) => {
     setTimeout(() => {
@@ -40,10 +40,10 @@ export const POST = async (req: NextRequest) => {
     }, 2000);
   });
 
-  //   const tx = await signer.sendTransaction({
-  //     to: walletAddress!,
-  //     value,
-  //   });
+  const tx = await signer.sendTransaction({
+    to: walletAddress!,
+    value,
+  });
 
   return NextResponse.json({
     value: 0.0001,
