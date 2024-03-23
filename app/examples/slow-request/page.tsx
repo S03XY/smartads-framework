@@ -82,8 +82,9 @@ export default async function Home({ searchParams }: NextServerPageProps) {
 
     const uniqueId = `fid:${requesterFid}`;
 
-    const existingRequest =
-      await kv.get<RandomNumberRequestStateValue>(uniqueId);
+    const existingRequest = await kv.get<RandomNumberRequestStateValue>(
+      uniqueId
+    );
 
     if (existingRequest) {
       switch (existingRequest.status) {

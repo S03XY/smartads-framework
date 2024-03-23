@@ -21,7 +21,6 @@ export async function POST(req: NextRequest) {
 
   try {
     const randomNumber = Math.random();
-
     await kv.set<RandomNumberRequestStateValue>(
       uniqueId,
       {

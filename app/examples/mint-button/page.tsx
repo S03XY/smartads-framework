@@ -46,6 +46,7 @@ const nfts: {
     }),
   },
 ];
+
 const initialState: State = { pageIndex: 0 };
 
 const reducer: FrameReducer<State> = (state, action) => {
