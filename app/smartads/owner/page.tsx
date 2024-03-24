@@ -65,26 +65,32 @@ const OwnerPage = () => {
         </div>
       )}
 
-      <div className="w-full h-full overflow-y-auto  p-10 text-white">
-        {castData.map((d: any, i: number) => (
-          <div key={i} className="border-b-[1px] border-white/10 p-10">
-            <div className="text-sm p-2 bg-slate-500 rounded-lg p-4">
-              {d?.content}
-            </div>
-
-            {d?.embeds.length > 0 && (
-              <div className="grid grid-cols-4 mt-5 gap-4">
-                {d?.embeds.map((u: any, i: number) => (
-                  <div key={i}>
-                    <Image src={u.url} alt="" height={500} width={500} />
-                    {/* <video src={u.url}  height={500} width={500} autoPlay controls/> */}
-                  </div>
-                ))}
+      {userData && !castData ? (
+        <div className="w-full h-full overflow-y-auto  p-10 text-white flex justify-center items-center">
+          Loding...
+        </div>
+      ) : (
+        <div className="w-full h-full overflow-y-auto  p-10 text-white">
+          {castData.map((d: any, i: number) => (
+            <div key={i} className="border-b-[1px] border-white/10 p-10">
+              <div className="text-sm p-2 bg-slate-500 rounded-lg p-4">
+                {d?.content}
               </div>
-            )}
-          </div>
-        ))}
-      </div>
+
+              {d?.embeds.length > 0 && (
+                <div className="grid grid-cols-4 mt-5 gap-4">
+                  {d?.embeds.map((u: any, i: number) => (
+                    <div key={i}>
+                      <Image src={u.url} alt="" height={500} width={500} />
+                      {/* <video src={u.url}  height={500} width={500} autoPlay controls/> */}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

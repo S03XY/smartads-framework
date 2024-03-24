@@ -57,7 +57,7 @@ const MagicTxn = () => {
         console.log("before redirec");
         router.push("/smartads/reward");
         setShowAds(false);
-      }, 2000);
+      }, 5000);
     }
   }, [showAd]);
 
@@ -89,7 +89,7 @@ const MagicTxn = () => {
       <div className="flex justify-center items-center py-5">
         <DynamicWidget />
       </div>
-      {!showAd ? (
+      {showAd ? (
         <div>
           <div className="mx-auto w-fit mt-10 cursor-pointer">
             <Image
