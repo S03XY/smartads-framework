@@ -105,7 +105,7 @@ const SmartAdsFrame = ({ searchParams }: NextServerPageProps) => {
     </FrameButton>,
     <FrameButton
       key={3}
-      action="post_redirect"
+      action="tx"
       target={`${currentURL("/smartads-frame/mint")}`}
     >
       Mint
