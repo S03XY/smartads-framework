@@ -14,7 +14,7 @@ export const initOpRelayer = async () => {
   client.watchContractEvent({
     abi: RELAYER_CONTRACT_ABI,
     address: OP_RELAYER_CONTRACT,
-    eventName: "crossDeposit",
+    eventName: "DepositEvent",
     onLogs: async (log) => {
       console.log("");
       const account = privateKeyToAccount(`0x${process.env.PRIVATE_KEY!}`);
