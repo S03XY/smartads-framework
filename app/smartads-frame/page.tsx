@@ -25,7 +25,7 @@ const reducer: FrameReducer<FrameState> = (state, action) => {
   const buttonIndex = action.postBody?.untrustedData.buttonIndex!;
 
   // console.log("during state", state);
-  // console.log("frame action", action);
+  console.log("frame action", action);
 
   switch (state.pageState) {
     case "landing":
@@ -92,12 +92,16 @@ const SmartAdsFrame = ({ searchParams }: NextServerPageProps) => {
       Preview
     </FrameButton>,
 
-    <FrameButton
-      key={2}
-      action="link"
-      target="https://ipfs.io/ipfs/QmUFuKaQLyhGAiugMy81ggqc28Wpn3yrDmyWtRso8t7j1H/base.mp4"
-    >
-      Asset
+    // <FrameButton
+    //   key={2}
+    //   action="link"
+    //   target="https://ipfs.io/ipfs/QmUFuKaQLyhGAiugMy81ggqc28Wpn3yrDmyWtRso8t7j1H/base.mp4"
+    // >
+    //   Asset
+    // </FrameButton>,
+
+    <FrameButton key={2} action="link" target={`/smartads/owner?fid=${"fid"}`}>
+      Owner
     </FrameButton>,
     <FrameButton
       key={3}
