@@ -89,7 +89,7 @@ const MagicTxn = () => {
       <div className="flex justify-center items-center py-5">
         <DynamicWidget />
       </div>
-      {showAd ? (
+      {!showAd ? (
         <div>
           <div className="mx-auto w-fit mt-10 cursor-pointer">
             <Image
@@ -99,9 +99,9 @@ const MagicTxn = () => {
             />
           </div>
           <div className="mt-10 w-fit mx-auto">
-            <p className="text-white text-lg">
+            <p className="text-white text-lg flex justify-center items-center space-x-4">
               <VscServerProcess className="text-xl" />
-              {data?.hash}
+              <p>{data?.hash}</p>
             </p>
           </div>
         </div>

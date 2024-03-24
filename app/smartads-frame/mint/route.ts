@@ -8,6 +8,10 @@ import { RandomNumberRequestStateValue } from "../../examples/slow-request/slow-
 import { POST as POSTNext, PreviousFrame } from "frames.js/next/server";
 
 export const POST = async (req: NextRequest, res: any) => {
+
+
+
+  
   const redirectHandler = (prevFrame: PreviousFrame) => {
     return "https://www.google.com";
   };

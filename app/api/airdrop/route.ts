@@ -1,11 +1,18 @@
 import { NextRequest, NextResponse } from "next/server";
 import { connectToDatabase } from "../../../libs/db";
-import * as ethers from "ethers";
+
+import { privateKeyToAccount } from "viem/accounts";
+import {
+  createPublicClient,
+  createWalletClient,
+  formatEther,
+  http,
+  parseEther,
+} from "viem";
+import { baseSepolia } from "viem/chains";
 
 export const POST = async (req: NextRequest) => {
   const { email, walletAddress } = await req.json();
-
-  console.log(email, walletAddress);
 
   const connection = await connectToDatabase();
   const db = connection?.useDb("smartAds");
@@ -20,33 +27,64 @@ export const POST = async (req: NextRequest) => {
 
   const response = await db?.collection("user_data").find(query).toArray();
 
+  const account = privateKeyToAccount(`0x${process.env.PRIVATE_KEY!}`);
+
+  const client = createWalletClient({
+    account,
+    chain: baseSepolia,
+    transport: http(),
+  });
+
+  const value = parseEther(`${response?.length! * 10 * 0.05 * 0.00001}`);
+
+  const txn = await client.sendTransaction({
+    account,
+    to: walletAddress!,
+    value: value,
+  });
+
   //   send the ether from admin wallet to user wallet
 
-  const provider = new ethers.providers.JsonRpcProvider(
-    "https://base-sepolia.g.alchemy.com/v2/sjw-yse2kw2qzbAR3jh2IsdHRnwsi6Zg",
-    "base"
-  );
+  // const network = await ethers.providers.getNetwork({
+  //   chainId: 8453,
+  //   name: "base",
+  // });
 
-  const signer = new ethers.Wallet(process.env.PRIVATE_KEY!, provider);
+  // const provider = new ethers.providers.JsonRpcProvider(
+  //   "https://mainnet.base.org",
+  //   network
+  // );
 
-  const value = ethers.utils.parseUnits(
-    `${response?.length! * 10 * 0.05 * 0.00001}`,
-    "ether"
-  );
+  // console.log(await provider.getGasPrice());
 
-  await new Promise((resolve, reject) => {
-    setTimeout(() => {
-      resolve(1);
-    }, 2000);
-  });
+  // const signer = new ethers.Wallet(, provider);
 
-  const tx = await signer.sendTransaction({
-    to: walletAddress!,
-    value,
-  });
+  // const value = ethers.utils.parseUnits(
+  //   `${response?.length! * 10 * 0.05 * 0.00001}`,
+  //   "ether"
+  // );
+
+  // const contract = new ethers.Contract(
+  //   "0xf266692F6Ec2b45b7Bb20C6B681a4a6017e450bb",
+  //   CONTRACT_ABI,
+  //   signer
+  // );
+
+  // const data = await contract.symbol();
+
+  // await new Promise((resolve, reject) => {
+  //   setTimeout(() => {
+  //     resolve(1);
+  //   }, 2000);
+  // });
+
+  // const tx = await signer.sendTransaction({
+  //   to: walletAddress!,
+  //   value,
+  // });
 
   return NextResponse.json({
-    value: 0.0001,
-    tx: "0xf86a91cf325cb35ba2610ff406902b9eaf8d59c4f8a0d1f645d7faf180953381",
+    value: formatEther(value),
+    txn,
   });
 };
